@@ -1,0 +1,9 @@
+#	Qué falta	Dónde se toca	Esfuerzo
+1	Botón “Modificar Evento”. El informe dice “Registro y modificación de eventos	Formularios interactivos”. El método ya existe en el gestor, solo falta el botón.	Main: botón y método modificarEventoGUI()
+2	Tareas en la interfaz. Es el “Adicional 2” del informe. Hay que agregar un botón “Agregar Tarea” y mostrar las tareas ordenadas en la agenda.	Main	Medio
+3	Validar solapamiento de tareas. Hoy seSolapaCon no se usa en ningún lado. agregarTarea tiene que rechazar una tarea que choque con otra.	EventoPapal.agregarTarea	Fácil
+4	Validar el perfil al inscribirse. El informe dice “inscripción validando perfiles”, pero hoy cualquier texto se acepta. Debería aceptar solo Peregrino, Prensa, Voluntario o Autoridad.	Asistente (constructor)	Fácil
+5	Registrar el resultado del evento. El informe habla de feedback, de puntaje y de comparación entre lo previsto y lo real (registrarResultado y generarComparacionReal). Falta un botón de administrador y mostrar el resultado en la agenda.	Main	Medio
+6	Alertas “en rojo”. Hoy solo el botón es rojo. El JTextArea no permite colores por línea, así que hay que mostrar la alerta en un cuadro con texto rojo o cambiar a un componente con HTML.	Main	Medio
+7	Excepciones específicas. El informe dice que se atrapan DateTimeParseException y NumberFormatException, pero el código atrapa Exception genérica. Conviene agregar esos catch con mensajes más claros.	Main, en crearEventoGUI	Fácil
+8	Mensaje de capacidad. La tabla de pruebas dice que “indica la cantidad de inscriptos”, pero el mensaje real no la incluye. Se arregla agregando asistentes.size() al texto.

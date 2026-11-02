@@ -1,3 +1,4 @@
+import java.text.Normalizer;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -59,12 +60,17 @@ public class GestorEventos {
         eventos.remove(e);
         agregarNotificacion("Evento cancelado: " + e.getNombre(), false);
     }
-
+    //La asignacion de personal, nuevas modificaciones, el cantidad <= 0 ya no permite negativos y el tipo == null hace que si se accede se tiene que indicar el tipo de personal.
     public void asignarPersonal(String idEvento, String tipo, int cantidad) {
         EventoPapal e = buscarEvento(idEvento);
         if (e == null) throw new IllegalArgumentException("Evento no encontrado.");
 
+        if (cantidad <= 0 ) throw new IllegalArgumentException("La cantidad debe ser mayor a 0.");
+        if(tipo == null || tipo.trim().isEmpty()) throw new IllegalArgumentException("Debe indicar el tipo de personal.");
+        //Arregla el probelma que se generaba cuando se ponia Medico con tilde , decia que estaba asignado bien pero despues no se asignaba.
+        String tipoLimpio = Normalizer.normalize(tipo.trim(), Normalizer.Form.NFD).replaceAll("\\p{M}", "");
         String tipoFormateado = tipo.substring(0, 1).toUpperCase() + tipo.substring(1).toLowerCase();
+        if (!personalGlobal.containsKey(tipoFormateado)) throw new IllegalArgumentException("Tipo de personal inexistente. Opciones: " + personalGlobal.keySet());
 
         int disponible = personalGlobal.getOrDefault(tipoFormateado, 0);
         if (disponible < cantidad) throw new IllegalArgumentException("Personal insuficiente. Disponible de " + tipoFormateado + ": " + disponible);
@@ -79,3 +85,4 @@ public class GestorEventos {
         return eventos.stream().filter(e -> e.getId().equals(id)).findFirst().orElse(null);
     }
 }
+
